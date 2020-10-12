@@ -4,6 +4,7 @@ import ru.netology.domain.Flight;
 import ru.netology.repository.FlightRepository;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 import static java.util.Arrays.sort;
 
@@ -11,6 +12,7 @@ public class FlightManager {
     private FlightRepository repository;
 
     public FlightManager(FlightRepository repository) {
+
         this.repository = repository;
     }
 
@@ -24,7 +26,7 @@ public class FlightManager {
         repository.removeById(id);
     }
 
-    public Flight[] getAll(String from, String to) {
+    public Flight[] getAll(String from, String to, Comparator<Flight> comparator) {
         Flight[] result = new Flight[0];
         for (Flight flight : repository.findAll()) {
             if (flight.matches(from, to)) {
@@ -34,7 +36,7 @@ public class FlightManager {
                 result = tmp;
             }
         }
-        Arrays.sort(result);
+        Arrays.sort(result, comparator);
         return result;
 
     }
